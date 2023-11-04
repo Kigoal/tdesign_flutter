@@ -1,6 +1,6 @@
 name: tdesign_flutter
 description: TDesign 适配移动端的组件库，适合在 flutter 技术栈项目中使用。
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/Kigoal/tdesign_flutter
 
 environment:
@@ -13,7 +13,7 @@ dependencies:
   http: ^1.1.0
   image_picker: ^1.0.4
   provider: ^6.0.5
-  tdesign_icons_flutter: ^1.0.0
+  tdesign_icons_flutter: ^1.0.1
   uuid: ^4.1.0
 
 dev_dependencies:
