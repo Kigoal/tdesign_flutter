@@ -1,0 +1,4 @@
+enum TdCellGroupType {
+  insetGrouped,
+  sidebar,
+}

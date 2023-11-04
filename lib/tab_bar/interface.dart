@@ -1,0 +1,4 @@
+enum TdTabBarShape {
+  normal,
+  round,
+}
