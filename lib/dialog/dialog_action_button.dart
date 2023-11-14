@@ -6,16 +6,19 @@ class TdDialogActionButton {
   const TdDialogActionButton({
     this.role = TdDialogActionRole.none,
     this.onPressed,
+    this.icon,
     required this.title,
   });
 
   const TdDialogActionButton.submit({
     this.onPressed,
+    this.icon,
     required this.title,
   }) : role = TdDialogActionRole.submit;
 
   const TdDialogActionButton.delete({
     this.onPressed,
+    this.icon,
     required this.title,
   }) : role = TdDialogActionRole.delete;
 
@@ -24,6 +27,9 @@ class TdDialogActionButton {
 
   /// 按钮权限
   final TdDialogActionRole role;
+
+  /// 图标
+  final Widget? icon;
 
   /// 标题
   final Widget title;

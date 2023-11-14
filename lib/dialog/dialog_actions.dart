@@ -86,6 +86,7 @@ class TdDialogActions extends StatelessWidget {
         TdDialogActionRole.delete => TdButtonType.danger,
       },
       size: TdButtonSize.medium,
+      icon: item.icon,
       child: item.title,
     );
   }
