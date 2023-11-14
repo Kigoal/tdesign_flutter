@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/export.dart';
+import '../focus/export.dart';
 import './button_theme.dart';
 import './interface.dart';
 
@@ -96,6 +97,7 @@ class TdRawButton extends StatefulWidget {
 class _TdRawButtonState extends State<TdRawButton> {
   bool _tapped = false;
 
+  /// 点击事件
   void _setTapped(bool value) {
     if (_tapped != value) {
       setState(() {
@@ -151,45 +153,50 @@ class _TdRawButtonState extends State<TdRawButton> {
       );
     }
 
-    return GestureDetector(
-      onTap: () {
-        if (!widget.disabled) {
-          widget.onPressed();
-        }
-      },
-      onTapDown: (details) {
-        _setTapped(true);
-      },
-      onTapUp: (details) {
-        _setTapped(false);
-      },
-      onTapCancel: () {
-        _setTapped(false);
-      },
-      child: Container(
-        alignment: widget.alignment,
-        width: widget.width,
-        height: widget.height,
-        padding: widget.padding,
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: widget.borderRadius,
-          border: border,
-          boxShadow: widget.boxShadow,
-        ),
-        child: IconTheme(
-          data: (widget.iconTheme ?? const IconThemeData()).copyWith(
-            color: textColor,
-            weight: 600.0,
+    return TdFocus(
+      debugLabel: 'TdButton',
+      canRequestFocus: !widget.disabled,
+      child: GestureDetector(
+        onTap: () {
+          if (!widget.disabled) {
+            widget.onPressed();
+          }
+        },
+        onTapDown: (details) {
+          _setTapped(true);
+        },
+        onTapUp: (details) {
+          _setTapped(false);
+        },
+        onTapCancel: () {
+          _setTapped(false);
+        },
+      behavior: HitTestBehavior.opaque,
+        child: Container(
+          alignment: widget.alignment,
+          width: widget.width,
+          height: widget.height,
+          padding: widget.padding,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: widget.borderRadius,
+            border: border,
+            boxShadow: widget.boxShadow,
           ),
-          child: DefaultTextStyle(
-            style: (widget.textStyle ?? const TextStyle()).copyWith(
+          child: IconTheme(
+            data: (widget.iconTheme ?? const IconThemeData()).copyWith(
               color: textColor,
-              fontWeight: FontWeight.w600,
+              weight: 600.0,
             ),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            child: widget.child,
+            child: DefaultTextStyle(
+              style: (widget.textStyle ?? const TextStyle()).copyWith(
+                color: textColor,
+                fontWeight: FontWeight.w600,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              child: widget.child,
+            ),
           ),
         ),
       ),
