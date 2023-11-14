@@ -14,6 +14,10 @@ class TdFormTextField extends FormField<String> {
     ValueChanged<String>? onChanged,
     int? maxLength,
     EdgeInsets? contentPadding,
+    TextAlign textAlign = TextAlign.start,
+    TextInputType keyboardType = TextInputType.text,
+    TextInputAction textInputAction = TextInputAction.done,
+    TextCapitalization textCapitalization = TextCapitalization.sentences,
     Widget? label,
     double? labelWidth,
     TextAlign? labelAlign,
@@ -40,8 +44,11 @@ class TdFormTextField extends FormField<String> {
               controller: state._effectiveController,
               hintText: hintText,
               contentPadding: contentPadding,
-              // textInputAction: TextInputAction.next,
               maxLength: maxLength,
+              textAlign: textAlign,
+              keyboardType: keyboardType,
+              textInputAction: textInputAction,
+              textCapitalization: textCapitalization,
             );
 
             return TdFormItem(
