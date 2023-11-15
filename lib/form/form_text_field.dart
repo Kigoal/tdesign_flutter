@@ -17,7 +17,7 @@ class TdFormTextField extends FormField<String> {
     TextAlign textAlign = TextAlign.start,
     TextInputType keyboardType = TextInputType.text,
     TextInputAction textInputAction = TextInputAction.done,
-    TextCapitalization textCapitalization = TextCapitalization.sentences,
+    TextCapitalization textCapitalization = TextCapitalization.none,
     Widget? label,
     double? labelWidth,
     TextAlign? labelAlign,
