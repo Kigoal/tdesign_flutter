@@ -19,17 +19,6 @@ class TdFormPickerView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = TdTheme.of(context);
 
-    Widget? contentWidget;
-    if (content != null) {
-      contentWidget = DefaultTextStyle(
-        style: theme.fontM.copyWith(
-          color: theme.textColorPlaceholder,
-        ),
-        textAlign: TextAlign.end,
-        child: content!,
-      );
-    }
-
     return TdFocus(
       onTap: onTap,
       child: Padding(
@@ -39,14 +28,20 @@ class TdFormPickerView extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            if (contentWidget != null)
+            if (content != null)
               Expanded(
-                child: contentWidget,
+                child: DefaultTextStyle(
+                  style: theme.fontM.copyWith(
+                    color: theme.textColorSecondary,
+                  ),
+                  textAlign: TextAlign.end,
+                  child: content!,
+                ),
               ),
             Icon(
               TdIcons.chevron_right,
               size: theme.spacer3,
-              color: theme.textColorPlaceholder,
+              color: theme.textColorSecondary,
             ),
           ],
         ),
