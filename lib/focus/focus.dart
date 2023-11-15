@@ -3,12 +3,24 @@ import 'package:flutter/widgets.dart';
 class TdFocus extends StatefulWidget {
   const TdFocus({
     super.key,
+    this.onTapDown,
+    this.onTapUp,
+    this.onTap,
+    this.onTapCancel,
     this.debugLabel,
     this.focusNode,
     this.canRequestFocus,
     this.skipTraversal,
     required this.child,
   });
+
+  final GestureTapCallback? onTap;
+
+  final GestureTapDownCallback? onTapDown;
+
+  final GestureTapUpCallback? onTapUp;
+
+  final GestureTapCallback? onTapCancel;
 
   /// 标签
   final String? debugLabel;
@@ -76,8 +88,12 @@ class _TdFocusState extends State<TdFocus> {
     return GestureDetector(
       onTap: () {
         _requestFocus();
+
+        widget.onTap?.call();
       },
-      behavior: HitTestBehavior.opaque,
+      onTapDown: widget.onTapDown,
+      onTapUp: widget.onTapUp,
+      onTapCancel: widget.onTapCancel,
       child: Focus(
         debugLabel: _debugLabel,
         focusNode: _effectiveFocus!,

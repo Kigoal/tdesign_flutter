@@ -154,49 +154,46 @@ class _TdRawButtonState extends State<TdRawButton> {
     }
 
     return TdFocus(
+      onTap: () {
+        if (!widget.disabled) {
+          widget.onPressed();
+        }
+      },
+      onTapDown: (details) {
+        _setTapped(true);
+      },
+      onTapUp: (details) {
+        _setTapped(false);
+      },
+      onTapCancel: () {
+        _setTapped(false);
+      },
       debugLabel: 'TdButton',
       canRequestFocus: !widget.disabled,
-      child: GestureDetector(
-        onTap: () {
-          if (!widget.disabled) {
-            widget.onPressed();
-          }
-        },
-        onTapDown: (details) {
-          _setTapped(true);
-        },
-        onTapUp: (details) {
-          _setTapped(false);
-        },
-        onTapCancel: () {
-          _setTapped(false);
-        },
-      behavior: HitTestBehavior.opaque,
-        child: Container(
-          alignment: widget.alignment,
-          width: widget.width,
-          height: widget.height,
-          padding: widget.padding,
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: widget.borderRadius,
-            border: border,
-            boxShadow: widget.boxShadow,
+      child: Container(
+        alignment: widget.alignment,
+        width: widget.width,
+        height: widget.height,
+        padding: widget.padding,
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: widget.borderRadius,
+          border: border,
+          boxShadow: widget.boxShadow,
+        ),
+        child: IconTheme(
+          data: (widget.iconTheme ?? const IconThemeData()).copyWith(
+            color: textColor,
+            weight: 600.0,
           ),
-          child: IconTheme(
-            data: (widget.iconTheme ?? const IconThemeData()).copyWith(
+          child: DefaultTextStyle(
+            style: (widget.textStyle ?? const TextStyle()).copyWith(
               color: textColor,
-              weight: 600.0,
+              fontWeight: FontWeight.w600,
             ),
-            child: DefaultTextStyle(
-              style: (widget.textStyle ?? const TextStyle()).copyWith(
-                color: textColor,
-                fontWeight: FontWeight.w600,
-              ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              child: widget.child,
-            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            child: widget.child,
           ),
         ),
       ),

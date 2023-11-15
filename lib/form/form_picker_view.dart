@@ -31,27 +31,24 @@ class TdFormPickerView extends StatelessWidget {
     }
 
     return TdFocus(
-      child: GestureDetector(
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: theme.spacer1,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              if (contentWidget != null)
-                Expanded(
-                  child: contentWidget,
-                ),
-              Icon(
-                TdIcons.chevron_right,
-                size: theme.spacer3,
-                color: theme.textColorPlaceholder,
+      onTap: onTap,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: theme.spacer1,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            if (contentWidget != null)
+              Expanded(
+                child: contentWidget,
               ),
-            ],
-          ),
+            Icon(
+              TdIcons.chevron_right,
+              size: theme.spacer3,
+              color: theme.textColorPlaceholder,
+            ),
+          ],
         ),
       ),
     );
