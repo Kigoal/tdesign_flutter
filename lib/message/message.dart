@@ -64,7 +64,7 @@ class _TdMessageState extends State<TdMessage> with SingleTickerProviderStateMix
       curve: Curves.ease,
     );
 
-    // 开始进入动画
+    // 开始进入动画1
     _animationController.forward();
 
     // 定时器
@@ -192,8 +192,6 @@ class TdRawMessage extends StatelessWidget {
                 color: theme.textColorPrimary,
               ),
               textAlign: textAlign,
-              // overflow: TextOverflow.ellipsis,
-              // maxLines: 1,
               child: content,
             ),
           ),
@@ -203,98 +201,18 @@ class TdRawMessage extends StatelessWidget {
   }
 }
 
-void showTdMessage(
-  BuildContext context, {
-  TdMessageType type = TdMessageType.info,
-  required Text title,
-  Icon? icon,
-  TextAlign textAlign = TextAlign.start,
-  Duration duration = _kTdMessageDuration,
-}) {
-  late final OverlayEntry overlayWidget;
-
-  void handleClosing() {
-    /// 删除元素
-    overlayWidget.remove();
-  }
-
-  overlayWidget = OverlayEntry(
-    builder: (context) {
-      return TdMessage(
-        onClosing: handleClosing,
-        type: type,
-        content: title,
-        icon: icon,
-        textAlign: textAlign,
-      );
-    },
-  );
-
-  /// 插入元素
-  Overlay.of(context).insert(overlayWidget);
-}
-
-void showTdInfoMessage(
-  BuildContext context, {
-  required Text title,
-  Icon? icon,
-}) {
-  showTdMessage(
-    context,
-    type: TdMessageType.info,
-    title: title,
-    icon: icon,
-  );
-}
-
-void showTdSuccessMessage(
-  BuildContext context, {
-  required Text title,
-  Icon? icon,
-}) {
-  showTdMessage(
-    context,
-    type: TdMessageType.success,
-    title: title,
-    icon: icon,
-  );
-}
-
-void showTdWarningMessage(
-  BuildContext context, {
-  required Text title,
-  Icon? icon,
-}) {
-  showTdMessage(
-    context,
-    type: TdMessageType.warning,
-    title: title,
-    icon: icon,
-  );
-}
-
-void showTdErrorMessage(
-  BuildContext context, {
-  required Text title,
-  Icon? icon,
-}) {
-  showTdMessage(
-    context,
-    type: TdMessageType.error,
-    title: title,
-    icon: icon,
-  );
-}
-
 class TdMessagePlugin {
-  static OverlayEntry? _show(
-    BuildContext context, {
+  static BuildContext? context;
+
+  static OverlayEntry? _show({
     required TdMessageType type,
     Duration? duration,
     TextAlign? textAlign,
     Icon? icon,
     required Text content,
   }) {
+    assert(context != null, 'context不能为空!');
+
     OverlayEntry? overlayWidget;
 
     void handleClosing() {
@@ -316,21 +234,19 @@ class TdMessagePlugin {
     );
 
     /// 插入元素
-    Overlay.of(context).insert(overlayWidget);
+    Overlay.of(context!).insert(overlayWidget);
 
     return overlayWidget;
   }
 
   /// 信息
-  static OverlayEntry? info(
-    BuildContext context, {
+  static OverlayEntry? info({
     Duration? duration,
     TextAlign? textAlign,
     Icon? icon,
     required Text content,
   }) {
     return _show(
-      context,
       type: TdMessageType.info,
       duration: duration,
       textAlign: textAlign,
@@ -340,15 +256,13 @@ class TdMessagePlugin {
   }
 
   /// 警告
-  static OverlayEntry? warning(
-    BuildContext context, {
+  static OverlayEntry? warning({
     Duration? duration,
     TextAlign? textAlign,
     Icon? icon,
     required Text content,
   }) {
     return _show(
-      context,
       type: TdMessageType.info,
       duration: duration,
       textAlign: textAlign,
@@ -358,15 +272,13 @@ class TdMessagePlugin {
   }
 
   /// 错误
-  static OverlayEntry? error(
-    BuildContext context, {
+  static OverlayEntry? error({
     Duration? duration,
     TextAlign? textAlign,
     Icon? icon,
     required Text content,
   }) {
     return _show(
-      context,
       type: TdMessageType.info,
       duration: duration,
       textAlign: textAlign,
@@ -376,15 +288,13 @@ class TdMessagePlugin {
   }
 
   /// 成功
-  static OverlayEntry? success(
-    BuildContext context, {
+  static OverlayEntry? success({
     Duration? duration,
     TextAlign? textAlign,
     Icon? icon,
     required Text content,
   }) {
     return _show(
-      context,
       type: TdMessageType.info,
       duration: duration,
       textAlign: textAlign,

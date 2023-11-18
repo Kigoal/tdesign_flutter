@@ -1,5 +1,6 @@
 library tdesign_flutter;
 
+export './global/export.dart';
 export './theme/export.dart';
 export './scaffold/export.dart';
 export './button/export.dart';
