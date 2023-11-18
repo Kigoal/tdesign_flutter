@@ -49,6 +49,7 @@ class TdMessage extends StatefulWidget {
 class _TdMessageState extends State<TdMessage> with SingleTickerProviderStateMixin {
   /// 进入/退出动画
   late final AnimationController _animationController;
+  late final CurvedAnimation _curvedAnimation;
 
   @override
   void initState() {
@@ -57,6 +58,10 @@ class _TdMessageState extends State<TdMessage> with SingleTickerProviderStateMix
     _animationController = AnimationController(
       vsync: this,
       duration: kThemeAnimationDuration,
+    );
+    _curvedAnimation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.ease,
     );
 
     // 开始进入动画
@@ -75,6 +80,7 @@ class _TdMessageState extends State<TdMessage> with SingleTickerProviderStateMix
   @override
   void dispose() {
     _animationController.dispose();
+    _curvedAnimation.dispose();
 
     super.dispose();
   }
@@ -86,19 +92,19 @@ class _TdMessageState extends State<TdMessage> with SingleTickerProviderStateMix
     final offset = MediaQuery.of(context).padding.top + _kTdMeesageOffset;
 
     return AnimatedBuilder(
-      animation: _animationController,
+      animation: _curvedAnimation,
       child: Padding(
-        padding:  EdgeInsets.symmetric(
+        padding: EdgeInsets.symmetric(
           horizontal: theme.spacer2,
         ),
         child: Align(
           alignment: Alignment.topCenter,
           child: TdRawMessage(
-              type: widget.type,
-              textAlign: widget.textAlign,
-              icon: widget.icon,
-              content: widget.content,
-            ),
+            type: widget.type,
+            textAlign: widget.textAlign,
+            icon: widget.icon,
+            content: widget.content,
+          ),
         ),
       ),
       builder: (context, child) {
