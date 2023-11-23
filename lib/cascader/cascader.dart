@@ -33,10 +33,44 @@ class TdCascader<T> extends StatefulWidget {
 
   @override
   State<TdCascader<T>> createState() => _TdCascaderState<T>();
+
+  /// 深度匹配选项
+  static List<TdCascaderItem<T>> matchSelector<T>(T value, List<TdCascaderItem<T>> options) {
+    final List<TdCascaderItem<T>> list = [];
+
+    for (final item in options) {
+      if (item.value == value) {
+        list.add(item);
+
+        return list;
+      } else if (item.children != null && item.children!.isNotEmpty) {
+        final result = matchSelector(value, item.children!);
+
+        if (result.isNotEmpty) {
+          list.addAll(result);
+          list.add(item);
+
+          return list;
+        }
+      }
+    }
+
+    return list;
+  }
+
+  /// 格式化文本内容
+  static String? format<T>(T value, List<TdCascaderItem<T>> options, [String separator = ' / ']) {
+    final result = matchSelector(value, options);
+
+    if (result.isNotEmpty) {
+      return result.map((item) => item.label).toList().reversed.join(separator);
+    }
+
+    return null;
+  }
 }
 
-class _TdCascaderState<T> extends State<TdCascader<T>>
-    with SingleTickerProviderStateMixin {
+class _TdCascaderState<T> extends State<TdCascader<T>> with SingleTickerProviderStateMixin {
   late final TdTabController _tabController;
 
   late final List<TdTabPanel> _tabPanel;
