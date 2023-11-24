@@ -66,7 +66,7 @@ class TdActionSheetAction extends StatelessWidget {
 
     return _TdActionSheetActionButton(
       onPressed: () {
-        popTdPopup(context);
+        TdPopupPlugin.pop();
 
         onPressed();
       },

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../theme/export.dart';
@@ -106,19 +108,24 @@ class _TdActionSheetList extends StatelessWidget {
   }
 }
 
-void showTdActionSheet<T>({
-  required BuildContext context,
-  Widget? message,
-  required List<Widget> actions,
-}) {
-  showTdPopup(
-    context: context,
-    enableDrag: false,
-    builder: (context) {
-      return TdActionSheet(
-        message: message,
-        actions: actions,
-      );
-    },
-  );
+class TdActionSheetPlugin {
+  /// 弹出选择框
+  static Future<void> open({
+    Widget? message,
+    required List<Widget> actions,
+  }) {
+    final completer = Completer<void>();
+
+    TdPopupPlugin.open(
+      enableDrag: false,
+      builder: (context) {
+        return TdActionSheet(
+          message: message,
+          actions: actions,
+        );
+      },
+    );
+
+    return completer.future;
+  }
 }

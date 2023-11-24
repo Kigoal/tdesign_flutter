@@ -5,8 +5,7 @@ import './form_item.dart';
 import './form_picker_view.dart';
 
 /// 根据值获取完整的标签
-bool _queryStack<T>(
-    List<TdCascaderItem<T>> list, T value, List<String> defaultList) {
+bool _queryStack<T>(List<TdCascaderItem<T>> list, T value, List<String> defaultList) {
   for (var i = 0; i < list.length; i++) {
     final item = list[i];
 
@@ -69,14 +68,14 @@ class TdFormCascader<T> extends FormField<T> {
             }
 
             final contentWidget = TdFormPickerView(
-              onTap: () {
-                showTdCascader<T>(
-                  context: field.context,
-                  initialValue: field.value,
-                  onChanged: handleChanged,
+              onTap: () async {
+                final result = await TdCascaderPlugin.open(
+                  field.value,
                   title: label,
-                  children: options,
+                  options: options,
                 );
+
+                handleChanged(result);
               },
               content: hintTextWidget,
             );

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
+import '../global/export.dart';
 import '../theme/export.dart';
 
 class TdPopup extends StatelessWidget {
@@ -46,53 +49,53 @@ class TdPopup extends StatelessWidget {
   }
 }
 
-void showTdPopup<T>({
-  Key? key,
-  required BuildContext context,
-  Color? backgroundColor,
-  bool barrierDismissible = true,
-  bool enableDrag = true,
-  bool useSafeArea = true,
-  bool useRootNavigator = true,
-  RouteSettings? settings,
-  AnimationController? transitionAnimationController,
-  required WidgetBuilder builder,
-}) {
-  final mediaQuery = MediaQuery.of(context);
+class TdPopupPlugin {
+  /// 弹出弹窗
+  static Future<void> open({
+    Key? key,
+    Color? backgroundColor,
+    bool barrierDismissible = true,
+    bool enableDrag = true,
+    bool useSafeArea = true,
+    bool useRootNavigator = true,
+    RouteSettings? settings,
+    AnimationController? transitionAnimationController,
+    required WidgetBuilder builder,
+  }) {
+    final context = TdConfigProvide.instance.context;
+    final theme = TdTheme.of(context);
+    final mediaQuery = MediaQuery.of(context);
 
-  final theme = TdTheme.of(context);
+    return showModalBottomSheet(
+      context: context,
+      constraints: BoxConstraints(
+        maxWidth: 640.0,
+        maxHeight: mediaQuery.size.height - mediaQuery.padding.top - (mediaQuery.size.width >= 640.0 ? 56.0 : 64.0),
+      ),
+      elevation: 0.0,
+      barrierColor: theme.maskActive.withOpacity(0.4),
+      isScrollControlled: true,
+      enableDrag: enableDrag,
+      useSafeArea: useSafeArea,
+      transitionAnimationController: transitionAnimationController,
+      builder: (context) {
+        return TdPopup(
+          key: key,
+          backgroundColor: backgroundColor,
+          useSafeArea: useSafeArea,
+          child: builder(context),
+        );
+      },
+    );
+  }
 
-  showModalBottomSheet(
-    context: context,
-    constraints: BoxConstraints(
-      maxWidth: 640.0,
-      maxHeight: mediaQuery.size.height - mediaQuery.padding.top - (mediaQuery.size.width >= 640.0 ? 56.0 : 64.0),
-    ),
-    elevation: 0.0,
-    barrierColor: theme.maskActive.withOpacity(0.4),
-    isScrollControlled: true,
-    enableDrag: enableDrag,
-    useSafeArea: useSafeArea,
-    transitionAnimationController: transitionAnimationController,
-    builder: (context) {
-      return TdPopup(
-        key: key,
-        backgroundColor: backgroundColor,
-        useSafeArea: useSafeArea,
-        child: builder(context),
-      );
-    },
-  );
-}
+  /// 关闭弹窗
+  static void pop<T>([T? result, bool useRootNavigator = true]) {
+    final context = TdConfigProvide.instance.context;
+    final navigator = Navigator.of(context, rootNavigator: useRootNavigator);
 
-void popTdPopup<T extends Object?>(
-  BuildContext context, {
-  bool useRootNavigator = true,
-  T? result,
-}) {
-  final navigator = Navigator.of(context, rootNavigator: useRootNavigator);
-
-  if (navigator.canPop()) {
-    navigator.pop<T>(result);
+    if (navigator.canPop()) {
+      navigator.pop<T>(result);
+    }
   }
 }

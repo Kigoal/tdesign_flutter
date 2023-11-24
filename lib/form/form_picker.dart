@@ -45,14 +45,14 @@ class TdFormPicker<T> extends FormField<T> {
             }
 
             final contentWidget = TdFormPickerView(
-              onTap: () {
-                showTdPicker<T>(
-                  context: field.context,
-                  initialValue: field.value,
-                  onChanged: handleChanged,
+              onTap: () async {
+                final result = await TdPickerPlugin.open(
+                  field.value,
                   title: label,
-                  children: options,
+                  options: options,
                 );
+
+                handleChanged(result);
               },
               content: hintTextWidget,
             );

@@ -33,21 +33,20 @@ class TdFormDateTimePicker extends FormField<DateTime> {
 
             Widget? hintTextWidget;
             if (field.value != null) {
-              hintTextWidget =
-                  Text(TdDateTimePicker.format(field.value!, mode));
+              hintTextWidget = Text(TdDateTimePicker.format(field.value!, mode));
             } else if (hintText != null) {
               hintTextWidget = Text(hintText);
             }
 
             final contentWidget = TdFormPickerView(
-              onTap: () {
-                showTdDateTimePicker(
-                  context: field.context,
-                  onChanged: handleChanged,
-                  initialValue: field.value,
+              onTap: () async {
+                final result = await TdDateTimePickerPlugin.open(
+                  field.value,
                   mode: mode,
                   title: label,
                 );
+
+                handleChanged(result);
               },
               content: hintTextWidget,
             );

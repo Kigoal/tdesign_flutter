@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
+import 'package:tdesign_flutter/popup/popup.dart';
 import 'package:tdesign_icons_flutter/tdesign_icons_flutter.dart';
 
+import '../global/export.dart';
 import '../theme/export.dart';
-import '../popup/export.dart' show popTdPopup;
+import '../popup/export.dart';
 import './dialog_actions.dart';
 import './dialog_notification.dart';
 
@@ -185,8 +188,7 @@ class TdDialogRoute<T> extends RawDialogRoute<T> {
     super.anchorPoint,
     super.traversalEdgeBehavior,
   }) : super(
-          pageBuilder: (BuildContext buildContext, Animation<double> animation,
-              Animation<double> secondaryAnimation) {
+          pageBuilder: (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation) {
             final Widget pageChild = Builder(builder: builder);
 
             Widget dialog = themes?.wrap(pageChild) ?? pageChild;
@@ -198,8 +200,8 @@ class TdDialogRoute<T> extends RawDialogRoute<T> {
             return dialog;
           },
           transitionDuration: const Duration(milliseconds: 200),
-          transitionBuilder: (BuildContext context, Animation<double> animation,
-              Animation<double> secondaryAnimation, Widget child) {
+          transitionBuilder:
+              (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
             return Opacity(
               opacity: animation.value,
               child: Transform.scale(
@@ -211,54 +213,59 @@ class TdDialogRoute<T> extends RawDialogRoute<T> {
         );
 }
 
-void showTdDialog<T>({
-  required BuildContext context,
-  VoidCallback? onClosed,
-  bool barrierDismissible = false,
-  bool useSafeArea = true,
-  bool useRootNavigator = true,
-  bool scrollable = false,
-  bool showCloseButton = false,
-  Image? image,
-  Widget? title,
-  required Widget content,
-  required TdDialogActions actionButton,
-}) {
-  final theme = TdTheme.of(context);
+class TdDialogPlugin {
+  /// 弹出对话框
+  static Future<void> open({
+    bool barrierDismissible = false,
+    bool useSafeArea = true,
+    bool useRootNavigator = true,
+    bool scrollable = false,
+    bool showCloseButton = false,
+    Image? image,
+    Widget? title,
+    required Widget content,
+    required TdDialogActions actionButton,
+  }) {
+    final completer = Completer<void>();
 
-  Navigator.of(context, rootNavigator: useRootNavigator)
-      .push<T>(TdDialogRoute<T>(
-    builder: (context) {
-      final mediaQuery = MediaQuery.of(context);
+    final context = TdConfigProvide.instance.context;
+    final theme = TdTheme.of(context);
 
-      final maxWidth = mediaQuery.size.width - theme.spacer2 * 2;
-      final maxHeight = mediaQuery.size.height - theme.spacer6 * 2;
+    Navigator.of(context, rootNavigator: useRootNavigator).push(TdDialogRoute(
+      builder: (context) {
+        final mediaQuery = MediaQuery.of(context);
 
-      return Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: min(320.0, maxWidth),
-            maxHeight: maxHeight,
+        final maxWidth = mediaQuery.size.width - theme.spacer2 * 2;
+        final maxHeight = mediaQuery.size.height - theme.spacer6 * 2;
+
+        return Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: min(320.0, maxWidth),
+              maxHeight: maxHeight,
+            ),
+            child: TdDialog(
+              onClosed: () {
+                TdPopupPlugin.pop();
+
+                completer.complete();
+              },
+              scrollable: scrollable,
+              showCloseButton: showCloseButton,
+              image: image,
+              title: title,
+              content: content,
+              actionButton: actionButton,
+            ),
           ),
-          child: TdDialog(
-            onClosed: () {
-              onClosed?.call();
+        );
+      },
+      barrierColor: theme.maskActive,
+      barrierDismissible: barrierDismissible,
+      useSafeArea: useSafeArea,
+      traversalEdgeBehavior: TraversalEdgeBehavior.closedLoop,
+    ));
 
-              popTdPopup(context);
-            },
-            scrollable: scrollable,
-            showCloseButton: showCloseButton,
-            image: image,
-            title: title,
-            content: content,
-            actionButton: actionButton,
-          ),
-        ),
-      );
-    },
-    barrierColor: theme.maskActive,
-    barrierDismissible: barrierDismissible,
-    useSafeArea: useSafeArea,
-    traversalEdgeBehavior: TraversalEdgeBehavior.closedLoop,
-  ));
+    return completer.future;
+  }
 }

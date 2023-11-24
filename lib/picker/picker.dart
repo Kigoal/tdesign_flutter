@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 
 import '../theme/export.dart';
@@ -120,43 +122,48 @@ class _TdPickerState<T> extends State<TdPicker<T>> {
   }
 }
 
-void showTdPicker<T>({
-  required BuildContext context,
-  Widget? title,
-  T? initialValue,
-  ValueChanged<T?>? onChanged,
-  required List<TdPickerItem<T>> children,
-}) {
-  T? value = initialValue;
+class TdPickerPlugin {
+  static Future<T?> open<T>(
+    T? initialValue, {
+    Widget? title,
+    required List<TdPickerItem<T>> options,
+  }) {
+    final completer = Completer<T>();
 
-  showTdPopup(
-    context: context,
-    builder: (context) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TdPopupAppbar(
-            title: title,
-            confirm: const Text('确定'),
-            onConfirm: () {
-              onChanged?.call(value);
+    T? value = initialValue;
 
-              popTdPopup(context);
-            },
-            cancel: const Text('取消'),
-            onCancel: () {
-              popTdPopup(context);
-            },
-          ),
-          TdPicker<T>(
-            onChanged: (newValue) {
-              value = newValue;
-            },
-            initialValue: initialValue,
-            children: children,
-          ),
-        ],
-      );
-    },
-  );
+    TdPopupPlugin.open(
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TdPopupAppbar(
+              title: title,
+              confirm: const Text('确定'),
+              onConfirm: () {
+                TdPopupPlugin.pop();
+
+                completer.complete(value);
+              },
+              cancel: const Text('取消'),
+              onCancel: () {
+                TdPopupPlugin.pop();
+
+                completer.complete();
+              },
+            ),
+            TdPicker<T>(
+              onChanged: (newValue) {
+                value = newValue;
+              },
+              initialValue: initialValue,
+              children: options,
+            ),
+          ],
+        );
+      },
+    );
+
+    return completer.future;
+  }
 }

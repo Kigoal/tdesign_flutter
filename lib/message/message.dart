@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:tdesign_icons_flutter/tdesign_icons_flutter.dart';
 
+import '../global/export.dart';
 import '../theme/export.dart';
 import './interface.dart';
 
@@ -202,8 +203,6 @@ class TdRawMessage extends StatelessWidget {
 }
 
 class TdMessagePlugin {
-  static BuildContext? context;
-
   static OverlayEntry? _show({
     required TdMessageType type,
     Duration? duration,
@@ -211,7 +210,7 @@ class TdMessagePlugin {
     Icon? icon,
     required Text content,
   }) {
-    assert(context != null, 'context不能为空!');
+    final context = TdConfigProvide.instance.context;
 
     OverlayEntry? overlayWidget;
 
@@ -234,7 +233,7 @@ class TdMessagePlugin {
     );
 
     /// 插入元素
-    Overlay.of(context!).insert(overlayWidget);
+    Overlay.of(context).insert(overlayWidget);
 
     return overlayWidget;
   }
@@ -263,7 +262,7 @@ class TdMessagePlugin {
     required Text content,
   }) {
     return _show(
-      type: TdMessageType.info,
+      type: TdMessageType.warning,
       duration: duration,
       textAlign: textAlign,
       icon: icon,
@@ -279,7 +278,7 @@ class TdMessagePlugin {
     required Text content,
   }) {
     return _show(
-      type: TdMessageType.info,
+      type: TdMessageType.error,
       duration: duration,
       textAlign: textAlign,
       icon: icon,
@@ -295,7 +294,7 @@ class TdMessagePlugin {
     required Text content,
   }) {
     return _show(
-      type: TdMessageType.info,
+      type: TdMessageType.success,
       duration: duration,
       textAlign: textAlign,
       icon: icon,

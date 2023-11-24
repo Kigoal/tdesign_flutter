@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
@@ -33,41 +34,6 @@ class TdCascader<T> extends StatefulWidget {
 
   @override
   State<TdCascader<T>> createState() => _TdCascaderState<T>();
-
-  /// 深度匹配选项
-  static List<TdCascaderItem<T>> matchSelector<T>(T value, List<TdCascaderItem<T>> options) {
-    final List<TdCascaderItem<T>> list = [];
-
-    for (final item in options) {
-      if (item.value == value) {
-        list.add(item);
-
-        return list;
-      } else if (item.children != null && item.children!.isNotEmpty) {
-        final result = matchSelector(value, item.children!);
-
-        if (result.isNotEmpty) {
-          list.addAll(result);
-          list.add(item);
-
-          return list;
-        }
-      }
-    }
-
-    return list;
-  }
-
-  /// 格式化文本内容
-  static String? format<T>(T value, List<TdCascaderItem<T>> options, [String separator = ' / ']) {
-    final result = matchSelector(value, options);
-
-    if (result.isNotEmpty) {
-      return result.map((item) => item.label).toList().reversed.join(separator);
-    }
-
-    return null;
-  }
 }
 
 class _TdCascaderState<T> extends State<TdCascader<T>> with SingleTickerProviderStateMixin {
@@ -347,37 +313,78 @@ class _TdCascaderPage<T> extends StatelessWidget {
   }
 }
 
-void showTdCascader<T>({
-  required BuildContext context,
-  T? initialValue,
-  ValueChanged<T?>? onChanged,
-  Widget? title,
-  required List<TdCascaderItem<T>> children,
-}) {
-  showTdPopup(
-    context: context,
-    builder: (context) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TdPopupAppbar.close(
-            title: title,
-            onClosing: () {
-              popTdPopup(context);
-            },
-          ),
-          TdCascader<T>(
-            title: title,
-            initialValue: initialValue,
-            onChanged: (value) {
-              onChanged?.call(value);
+class TdCascaderPlugin {
+  /// 深度匹配选项
+  static List<TdCascaderItem<T>> matchSelector<T>(T value, List<TdCascaderItem<T>> options) {
+    final List<TdCascaderItem<T>> list = [];
 
-              popTdPopup(context);
-            },
-            children: children,
-          ),
-        ],
-      );
-    },
-  );
+    for (final item in options) {
+      if (item.value == value) {
+        list.add(item);
+
+        return list;
+      } else if (item.children != null && item.children!.isNotEmpty) {
+        final result = matchSelector(value, item.children!);
+
+        if (result.isNotEmpty) {
+          list.addAll(result);
+          list.add(item);
+
+          return list;
+        }
+      }
+    }
+
+    return list;
+  }
+
+  /// 格式化文本内容
+  static String? format<T>(T value, List<TdCascaderItem<T>> options, [String separator = ' / ']) {
+    final result = matchSelector(value, options);
+
+    if (result.isNotEmpty) {
+      return result.map((item) => item.label).toList().reversed.join(separator);
+    }
+
+    return null;
+  }
+
+  /// 弹出选择框
+  static Future<T?> open<T>(
+    T? initialValue, {
+    Widget? title,
+    required List<TdCascaderItem<T>> options,
+  }) {
+    final completer = Completer<T>();
+
+    TdPopupPlugin.open(
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TdPopupAppbar.close(
+              title: title,
+              onClosing: () {
+                TdPopupPlugin.pop();
+
+                completer.complete();
+              },
+            ),
+            TdCascader<T>(
+              title: title,
+              initialValue: initialValue,
+              onChanged: (value) {
+                TdPopupPlugin.pop();
+
+                completer.complete(value);
+              },
+              children: options,
+            ),
+          ],
+        );
+      },
+    );
+
+    return completer.future;
+  }
 }

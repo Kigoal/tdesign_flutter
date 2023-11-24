@@ -1,30 +1,24 @@
 import 'package:flutter/widgets.dart';
 
-import '../message/export.dart';
+class TdConfigProvide {
+  /// 单例
+  static TdConfigProvide instance = TdConfigProvide();
 
-class TdGlobal extends StatefulWidget {
-  const TdGlobal({
-    super.key,
-    this.child,
-  });
+  TdConfigProvide({
+    GlobalKey? key,
+  }) : _key = key;
 
-  final Widget? child;
+  GlobalKey? _key;
 
-  @override
-  State<TdGlobal> createState() => _TdGlobalState();
-}
+  BuildContext get context {
+    final context = _key?.currentContext;
 
-class _TdGlobalState extends State<TdGlobal> {
-  @override
-  void initState() {
-    super.initState();
+    assert(context != null, '请先传递router key!');
 
-    TdMessagePlugin.context = context;
+    return context!;
   }
 
-  /// 初始化
-  @override
-  Widget build(BuildContext context) {
-    return widget.child ?? const SizedBox.shrink();
+  void setGlobalKey(GlobalKey key) {
+    _key = key;
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../picker/export.dart';
@@ -80,7 +82,7 @@ class TdDateTimePicker extends StatefulWidget {
     return format(date, [TdDateTimePickerMode.date]);
   }
 
-    static String formatHourAndMinute(DateTime date) {
+  static String formatHourAndMinute(DateTime date) {
     return format(date, [TdDateTimePickerMode.hourAndMinute]);
   }
 
@@ -282,43 +284,48 @@ class _TdDateTimePickerState extends State<TdDateTimePicker> {
   }
 }
 
-void showTdDateTimePicker({
-  required BuildContext context,
-  DateTime? initialValue,
-  ValueChanged<DateTime?>? onChanged,
-  List<TdDateTimePickerMode> mode = TdDateTimePickerMode.values,
-  Widget? title,
-}) {
-  DateTime? value = initialValue;
+class TdDateTimePickerPlugin {
+  static Future<DateTime?> open(
+    DateTime? initialValue, {
+    List<TdDateTimePickerMode> mode = TdDateTimePickerMode.values,
+    Widget? title,
+  }) {
+    final completer = Completer<DateTime?>();
 
-  showTdPopup(
-    context: context,
-    builder: (context) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TdPopupAppbar(
-            title: title,
-            confirm: const Text('确定'),
-            onConfirm: () {
-              onChanged?.call(value);
+    DateTime? value = initialValue;
 
-              popTdPopup(context);
-            },
-            cancel: const Text('取消'),
-            onCancel: () {
-              popTdPopup(context);
-            },
-          ),
-          TdDateTimePicker(
-            onChanged: (newValue) {
-              value = newValue;
-            },
-            initialValue: initialValue,
-            mode: mode,
-          ),
-        ],
-      );
-    },
-  );
+    TdPopupPlugin.open(
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TdPopupAppbar(
+              title: title,
+              confirm: const Text('确定'),
+              onConfirm: () {
+                TdPopupPlugin.pop();
+
+                completer.complete(value);
+              },
+              cancel: const Text('取消'),
+              onCancel: () {
+                TdPopupPlugin.pop();
+
+                completer.complete();
+              },
+            ),
+            TdDateTimePicker(
+              onChanged: (newValue) {
+                value = newValue;
+              },
+              initialValue: initialValue,
+              mode: mode,
+            ),
+          ],
+        );
+      },
+    );
+
+    return completer.future;
+  }
 }

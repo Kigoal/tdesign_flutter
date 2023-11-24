@@ -23,3 +23,4 @@ export './tabs/export.dart';
 export './cascader/export.dart';
 export './tag/export.dart';
 export './focus/export.dart';
+export './address/export.dart';
