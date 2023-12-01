@@ -8,10 +8,11 @@ import '../popup/export.dart';
 /// 56.0
 const kTdActionSheetActionButtonHeight = 56.0;
 
-class TdActionSheetAction extends StatelessWidget {
+class TdActionSheetAction<T> extends StatelessWidget {
   const TdActionSheetAction({
     super.key,
-    required this.onPressed,
+    this.onPressed,
+    this.value,
     this.isDefaultAction = false,
     this.isDestructiveAction = false,
     this.icon,
@@ -19,7 +20,10 @@ class TdActionSheetAction extends StatelessWidget {
   });
 
   /// 点击事件
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
+
+  /// 标签值
+  final T? value;
 
   /// 是否是默认选项
   final bool isDefaultAction;
@@ -37,8 +41,7 @@ class TdActionSheetAction extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = TdTheme.of(context);
 
-    Color defaultColor =
-        isDestructiveAction ? theme.errorColor : theme.textColorPrimary;
+    Color defaultColor = isDestructiveAction ? theme.errorColor : theme.textColorPrimary;
 
     FontWeight? defaultFontWeight = isDefaultAction ? FontWeight.w600 : null;
 
@@ -66,9 +69,9 @@ class TdActionSheetAction extends StatelessWidget {
 
     return _TdActionSheetActionButton(
       onPressed: () {
-        TdPopupPlugin.pop();
+        TdPopupPlugin.pop(value);
 
-        onPressed();
+        onPressed?.call();
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -92,12 +95,10 @@ class _TdActionSheetActionButton extends StatefulWidget {
   final VoidCallback onPressed;
 
   @override
-  State<_TdActionSheetActionButton> createState() =>
-      _TdActionSheetActionButtonState();
+  State<_TdActionSheetActionButton> createState() => _TdActionSheetActionButtonState();
 }
 
-class _TdActionSheetActionButtonState
-    extends State<_TdActionSheetActionButton> {
+class _TdActionSheetActionButtonState extends State<_TdActionSheetActionButton> {
   bool _tapped = false;
 
   void _setTapped(bool value) {
@@ -158,9 +159,7 @@ class _TdActionSheetActionButtonState
           height: kTdActionSheetActionButtonHeight,
         ),
         padding: EdgeInsets.symmetric(horizontal: theme.spacer2),
-        color: _tapped
-            ? theme.backgroundColorContainerActive
-            : theme.backgroundColorContainer,
+        color: _tapped ? theme.backgroundColorContainerActive : theme.backgroundColorContainer,
         child: widget.child,
       ),
     );

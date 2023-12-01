@@ -9,7 +9,7 @@ import './action_sheet_action.dart';
 
 const kTdActionSheetMaxCount = 6;
 
-class TdActionSheet extends StatelessWidget {
+class TdActionSheet<T> extends StatelessWidget {
   const TdActionSheet({
     super.key,
     this.message,
@@ -20,7 +20,7 @@ class TdActionSheet extends StatelessWidget {
   final Widget? message;
 
   /// 子元素
-  final List<Widget> actions;
+  final List<TdActionSheetAction<T>> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -110,22 +110,18 @@ class _TdActionSheetList extends StatelessWidget {
 
 class TdActionSheetPlugin {
   /// 弹出选择框
-  static Future<void> open({
+  static Future<T?> open<T>({
     Widget? message,
-    required List<Widget> actions,
+    required List<TdActionSheetAction<T>> actions,
   }) {
-    final completer = Completer<void>();
-
-    TdPopupPlugin.open(
+    return TdPopupPlugin.open<T>(
       enableDrag: false,
       builder: (context) {
-        return TdActionSheet(
+        return TdActionSheet<T>(
           message: message,
           actions: actions,
         );
       },
     );
-
-    return completer.future;
   }
 }
