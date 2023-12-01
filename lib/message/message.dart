@@ -88,9 +88,10 @@ class _TdMessageState extends State<TdMessage> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.paddingOf(context);
     final theme = TdTheme.of(context);
 
-    final offset = MediaQuery.of(context).padding.top + _kTdMeesageOffset;
+    final offset = mediaQuery.top + _kTdMeesageOffset;
 
     return AnimatedBuilder(
       animation: _curvedAnimation,

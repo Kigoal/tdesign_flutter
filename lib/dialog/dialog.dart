@@ -233,10 +233,10 @@ class TdDialogPlugin {
 
     Navigator.of(context, rootNavigator: useRootNavigator).push(TdDialogRoute(
       builder: (context) {
-        final mediaQuery = MediaQuery.of(context);
+        final mediaQuery = MediaQuery.sizeOf(context);
 
-        final maxWidth = mediaQuery.size.width - theme.spacer2 * 2;
-        final maxHeight = mediaQuery.size.height - theme.spacer6 * 2;
+        final maxWidth = mediaQuery.width - theme.spacer2 * 2;
+        final maxHeight = mediaQuery.height - theme.spacer6 * 2;
 
         return Center(
           child: ConstrainedBox(

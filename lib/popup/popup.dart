@@ -51,7 +51,7 @@ class TdPopup extends StatelessWidget {
 
 class TdPopupPlugin {
   /// 弹出弹窗
-  static Future<void> open({
+  static Future<T?> open<T>({
     Key? key,
     Color? backgroundColor,
     bool barrierDismissible = true,
@@ -64,13 +64,14 @@ class TdPopupPlugin {
   }) {
     final context = TdConfigProvide.instance.context;
     final theme = TdTheme.of(context);
-    final mediaQuery = MediaQuery.of(context);
+    final mediaQuerySize = MediaQuery.sizeOf(context);
+    final mediaQueryPadding = MediaQuery.paddingOf(context);
 
     return showModalBottomSheet(
       context: context,
       constraints: BoxConstraints(
         maxWidth: 640.0,
-        maxHeight: mediaQuery.size.height - mediaQuery.padding.top - (mediaQuery.size.width >= 640.0 ? 56.0 : 64.0),
+        maxHeight: mediaQuerySize.height - mediaQueryPadding.top - (mediaQuerySize.width >= 640.0 ? 56.0 : 64.0),
       ),
       elevation: 0.0,
       barrierColor: theme.maskActive.withOpacity(0.4),
