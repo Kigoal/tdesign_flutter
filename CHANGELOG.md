@@ -1,3 +1,33 @@
+## 🌈 0.0.4
+
+### ❗ Breaking Changes
+
+- `Message`: 移除 `showTdMessage` 函数
+
+- `Dialog`: 移除 `showTdDialog` 函数
+
+- `Popup`: 移除 `showTdPopup` 函数
+
+### 🚀 Features
+
+- `Cascader`: 新增 `TdCalendar` 组件
+
+- `Message`: 新增 `TdMessagePlugin` 静态类
+
+- `Dialog`: 新增 `TdDialogPlugin` 静态类
+
+- `Popup`: 新增 `TdPopupPlugin` 静态类
+
+- `Cascader`: `TdCascader` 新增 `matchSelector` 和 `format` 静态方法
+
+### 🚧 Others
+
+- `common`: 新增 `TdValueNotifierSelector` 组件
+
+- `pubspec`: 更新 `http` 至 `1.1.2`
+
+- `pubspec`: 更新 `uuid` 至 `4.2.1`
+
 ## 0.0.3
 
 ### 🚀 Features
