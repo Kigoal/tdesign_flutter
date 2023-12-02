@@ -228,7 +228,7 @@ class TdDialogPlugin {
   }) {
     final completer = Completer<void>();
 
-    final context = TdConfigProvide.instance.context;
+    final context = TdConfig.instance.context;
     final theme = TdTheme.of(context);
 
     Navigator.of(context, rootNavigator: useRootNavigator).push(TdDialogRoute(

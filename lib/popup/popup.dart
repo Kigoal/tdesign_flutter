@@ -62,7 +62,7 @@ class TdPopupPlugin {
     AnimationController? transitionAnimationController,
     required WidgetBuilder builder,
   }) {
-    final context = TdConfigProvide.instance.context;
+    final context = TdConfig.instance.context;
     final theme = TdTheme.of(context);
     final mediaQuerySize = MediaQuery.sizeOf(context);
     final mediaQueryPadding = MediaQuery.paddingOf(context);
@@ -92,7 +92,7 @@ class TdPopupPlugin {
 
   /// 关闭弹窗
   static void pop<T>([T? result, bool useRootNavigator = true]) {
-    final context = TdConfigProvide.instance.context;
+    final context = TdConfig.instance.context;
     final navigator = Navigator.of(context, rootNavigator: useRootNavigator);
 
     if (navigator.canPop()) {

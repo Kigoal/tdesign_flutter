@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 
-class TdConfigProvide {
+class TdConfig {
   /// 单例
-  static TdConfigProvide instance = TdConfigProvide();
+  static final TdConfig instance = TdConfig();
 
-  TdConfigProvide({
+  TdConfig({
     GlobalKey? key,
   }) : _key = key;
 
@@ -13,7 +13,7 @@ class TdConfigProvide {
   BuildContext get context {
     final context = _key?.currentContext;
 
-    assert(context != null, '请先传递router key!');
+    assert(context != null, '请设置全局Key!');
 
     return context!;
   }

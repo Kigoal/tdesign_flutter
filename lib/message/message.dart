@@ -211,7 +211,7 @@ class TdMessagePlugin {
     Icon? icon,
     required Text content,
   }) {
-    final context = TdConfigProvide.instance.context;
+    final context = TdConfig.instance.context;
 
     OverlayEntry? overlayWidget;
 
