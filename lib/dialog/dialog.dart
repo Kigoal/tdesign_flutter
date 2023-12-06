@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
-import 'package:tdesign_flutter/popup/popup.dart';
 import 'package:tdesign_icons_flutter/tdesign_icons_flutter.dart';
 
 import '../global/export.dart';

@@ -1,4 +1,4 @@
-import 'package:tdesign_flutter/tdesign_flutter.dart';
+import '../cascader/export.dart' show TdCascaderItem;
 
 const kCityOptions = [
   TdCascaderItem(
