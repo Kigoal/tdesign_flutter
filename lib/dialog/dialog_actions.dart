@@ -7,7 +7,7 @@ import './dialog_notification.dart';
 import './interface.dart';
 
 const kTdDialogActionConfirm = Text('确定');
-const kTdDialogActioncancel = Text('取消');
+const kTdDialogActionCancel = Text('取消');
 
 class TdDialogActions extends StatelessWidget {
   const TdDialogActions({
@@ -31,7 +31,7 @@ class TdDialogActions extends StatelessWidget {
   TdDialogActions.cancel({
     super.key,
     this.axis,
-    Widget cancel = kTdDialogActioncancel,
+    Widget cancel = kTdDialogActionCancel,
     VoidCallback? onCancel,
   }) : children = [
           TdDialogActionButton(
@@ -45,7 +45,7 @@ class TdDialogActions extends StatelessWidget {
     this.axis,
     Widget confirm = kTdDialogActionConfirm,
     VoidCallback? onConfirm,
-    Widget cancel = kTdDialogActioncancel,
+    Widget cancel = kTdDialogActionCancel,
     VoidCallback? onCancel,
   }) : children = [
           TdDialogActionButton.submit(
