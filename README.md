@@ -12,8 +12,8 @@ flutter pub add tdesign_flutter
 import 'package:tdesign_flutter/tdesign_flutter.dart';
 
 void main() {
-  runApp(AntApp(
-    home: Scaffold(
+  runApp(MaterialApp.router(
+    home: TdScaffold(
       body: Center(
         child: TdButton(
           onPressed: () {
