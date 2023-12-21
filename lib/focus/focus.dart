@@ -94,6 +94,7 @@ class _TdFocusState extends State<TdFocus> {
       onTapDown: widget.onTapDown,
       onTapUp: widget.onTapUp,
       onTapCancel: widget.onTapCancel,
+      behavior: HitTestBehavior.opaque,
       child: Focus(
         debugLabel: _debugLabel,
         focusNode: _effectiveFocus!,
