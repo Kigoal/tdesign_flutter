@@ -85,8 +85,7 @@ class TdAvatar extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundColor,
           shape: shape,
-          borderRadius:
-              shape == BoxShape.rectangle ? theme.radiusDefault : null,
+          borderRadius: shape == BoxShape.rectangle ? theme.radiusDefault : null,
         ),
         clipBehavior: Clip.antiAlias,
         child: child,
@@ -198,6 +197,9 @@ class _TdAvatarImageDelegate extends TdAvatarDelegate {
 
   @override
   Widget build(BuildContext context) {
-    return Image(image: image);
+    return Image(
+      image: image,
+      errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
+    );
   }
 }
