@@ -71,7 +71,7 @@ class TdPopupPlugin {
       context: context,
       constraints: BoxConstraints(
         maxWidth: 640.0,
-        maxHeight: mediaQuerySize.height - mediaQueryPadding.top - (mediaQuerySize.width >= 640.0 ? 56.0 : 64.0),
+        maxHeight: mediaQuerySize.height - mediaQueryPadding.top - 12.0,
       ),
       elevation: 0.0,
       barrierColor: theme.maskActive.withOpacity(0.4),
