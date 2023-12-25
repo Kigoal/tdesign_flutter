@@ -1,8 +1,18 @@
+## 🌈 0.0.6
+
+### 🚀 Features
+
+- `Form`: 新增 `TdBottomActions` 组件
+
+### 🚧 Others
+
+- `common`: 新增 `TdChangeNotifierSelector` 组件
+
 ## 🌈 0.0.5
 
 ### 🚀 Features
 
-- `TdConfig`: 新增单例调用
+- `Config`: 新增 `TdConfig` 单例调用
 
 ## 🌈 0.0.4
 
