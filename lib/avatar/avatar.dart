@@ -15,10 +15,14 @@ class TdAvatar extends StatelessWidget {
     super.key,
     this.shape = BoxShape.circle,
     this.size = TdAvatarSize.medium,
+    Color? foreground,
+    Color? backgroundColor,
     required Widget child,
   }) : delegate = _TdAvatarTextDelegate(
           shape: shape,
           size: size,
+          foreground: foreground,
+          backgroundColor: backgroundColor,
           child: child,
         );
 
@@ -26,10 +30,14 @@ class TdAvatar extends StatelessWidget {
     super.key,
     this.shape = BoxShape.circle,
     this.size = TdAvatarSize.medium,
+    Color? foreground,
+    Color? backgroundColor,
     required Widget child,
   }) : delegate = _TdAvatarIconDelegate(
           shape: shape,
           size: size,
+          foreground: foreground,
+          backgroundColor: backgroundColor,
           child: child,
         );
 
@@ -113,18 +121,25 @@ abstract class TdAvatarDelegate {
 
 class _TdAvatarTextDelegate extends TdAvatarDelegate {
   const _TdAvatarTextDelegate({
-    required this.child,
     required super.shape,
     required super.size,
+    this.foreground,
+    this.backgroundColor,
+    required this.child,
   });
 
+  /// 文本颜色
+  final Color? foreground;
+
+  /// 背景颜色
+  final Color? backgroundColor;
+
+  /// 子元素
   final Widget child;
 
   @override
   Color? getBackgroundColor(BuildContext context) {
-    final theme = TdTheme.of(context);
-
-    return theme.brandColor;
+    return backgroundColor ?? TdTheme.of(context).brandColor;
   }
 
   @override
@@ -132,7 +147,9 @@ class _TdAvatarTextDelegate extends TdAvatarDelegate {
     final theme = TdTheme.of(context);
 
     return DefaultTextStyle(
-      style: theme.fontM.copyWith(color: theme.textColorAnti),
+      style: theme.fontM.copyWith(
+        color: foreground ?? theme.textColorAnti,
+      ),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       child: child,
@@ -142,18 +159,25 @@ class _TdAvatarTextDelegate extends TdAvatarDelegate {
 
 class _TdAvatarIconDelegate extends TdAvatarDelegate {
   const _TdAvatarIconDelegate({
-    required this.child,
     required super.shape,
     required super.size,
+    this.foreground,
+    this.backgroundColor,
+    required this.child,
   });
 
+  /// 图标颜色
+  final Color? foreground;
+
+  /// 背景颜色
+  final Color? backgroundColor;
+
+  /// 子元素
   final Widget child;
 
   @override
   Color? getBackgroundColor(BuildContext context) {
-    final theme = TdTheme.of(context);
-
-    return theme.brandColorLight;
+    return backgroundColor ?? TdTheme.of(context).brandColorLight;
   }
 
   double _getIconSize(TdThemeData theme) {
@@ -176,7 +200,7 @@ class _TdAvatarIconDelegate extends TdAvatarDelegate {
     return IconTheme(
       data: IconThemeData(
         size: size,
-        color: theme.brandColor,
+        color: foreground ?? theme.brandColor,
       ),
       child: child,
     );
@@ -185,9 +209,9 @@ class _TdAvatarIconDelegate extends TdAvatarDelegate {
 
 class _TdAvatarImageDelegate extends TdAvatarDelegate {
   const _TdAvatarImageDelegate({
-    required this.image,
     required super.shape,
     required super.size,
+    required this.image,
   });
 
   final ImageProvider image;
