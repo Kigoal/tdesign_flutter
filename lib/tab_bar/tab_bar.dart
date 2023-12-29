@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tdesign_mobile_flutter/tdesign_mobile_flutter.dart';
 
 import '../theme/export.dart';
 import './tab_bar_controller.dart';
@@ -102,7 +103,7 @@ class _TdTabBarState extends State<TdTabBar> {
         border: Border(
           top: BorderSide(
             color: theme.componentStroke,
-            width: 1.0,
+            width: 0.5,
           ),
         ),
       ),
@@ -171,8 +172,7 @@ class _TdTabBarButton extends StatelessWidget {
 
     Widget? iconWidget;
     if (currentIcon != null) {
-      final size =
-          label != null ? (theme.spacer3 - theme.spacer / 2) : theme.spacer3;
+      final size = label != null ? (theme.spacer3 - theme.spacer / 2) : theme.spacer3;
 
       iconWidget = IconTheme(
         data: IconThemeData(
@@ -184,9 +184,7 @@ class _TdTabBarButton extends StatelessWidget {
     }
     return Container(
       decoration: BoxDecoration(
-        color: isActive && shape == TdTabBarShape.round
-            ? theme.brandColorLight
-            : null,
+        color: isActive && shape == TdTabBarShape.round ? theme.brandColorLight : null,
         borderRadius: theme.radiusRound,
       ),
       child: Column(
