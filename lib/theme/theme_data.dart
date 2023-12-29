@@ -243,7 +243,8 @@ final class TdThemeData extends ThemeExtension<TdThemeData> {
       successColorLightActive ??= successColor2;
 
       // 背景色
-      backgroundColorPage ??= grayColor1;
+      // backgroundColorPage ??= grayColor1;
+      backgroundColorPage ??= const Color(0xFFF3F3F7);
       backgroundColorContainer ??= fontWhite1;
       backgroundColorContainerActive ??= grayColor3;
       backgroundColorSecondaryContainer ??= grayColor1;
