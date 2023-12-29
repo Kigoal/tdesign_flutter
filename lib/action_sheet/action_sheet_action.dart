@@ -43,30 +43,6 @@ class TdActionSheetAction<T> extends StatelessWidget {
 
     Color defaultColor = isDestructiveAction ? theme.errorColor : theme.textColorPrimary;
 
-    FontWeight? defaultFontWeight = isDefaultAction ? FontWeight.w600 : null;
-
-    Widget? iconWidget;
-    if (icon != null) {
-      iconWidget = Padding(
-        padding: EdgeInsets.only(right: theme.spacer),
-        child: IconTheme(
-          data: IconThemeData(
-            size: theme.spacer3,
-            color: defaultColor,
-          ),
-          child: icon!,
-        ),
-      );
-    }
-
-    final Widget childWidget = DefaultTextStyle(
-      style: theme.fontM.copyWith(
-        color: defaultColor,
-        fontWeight: defaultFontWeight,
-      ),
-      child: child,
-    );
-
     return _TdActionSheetActionButton(
       onPressed: () {
         TdPopupPlugin.pop(value);
@@ -76,8 +52,28 @@ class TdActionSheetAction<T> extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (iconWidget != null) iconWidget,
-          childWidget,
+          if (icon != null)
+            Padding(
+              padding: EdgeInsets.only(right: theme.spacer),
+              child: IconTheme(
+                data: IconThemeData(
+                  size: theme.spacer3,
+                  color: defaultColor,
+                ),
+                child: icon!,
+              ),
+            ),
+          Flexible(
+            child: DefaultTextStyle(
+              style: theme.fontM.copyWith(
+                color: defaultColor,
+                fontWeight: isDefaultAction ? FontWeight.w600 : null,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              child: child,
+            ),
+          ),
         ],
       ),
     );

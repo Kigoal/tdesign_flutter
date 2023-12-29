@@ -26,29 +26,23 @@ class TdActionSheet<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = TdTheme.of(context);
 
-    Widget? messageWidget;
-    if (message != null) {
-      messageWidget = Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: theme.spacer1,
-          horizontal: theme.spacer2,
-        ),
-        child: DefaultTextStyle(
-          style: theme.fontBase.copyWith(color: theme.textColorPlaceholder),
-          child: message!,
-        ),
-      );
-    }
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (messageWidget != null) ...[
-          messageWidget,
-          TdDivider(
-            indent: 0.0,
-            color: theme.grayColor1,
+        if (message != null) ...[
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: theme.spacer1,
+              horizontal: theme.spacer2,
+            ),
+            child: DefaultTextStyle(
+              style: theme.fontBase.copyWith(
+                color: theme.textColorPlaceholder,
+              ),
+              child: message!,
+            ),
           ),
+          const TdDivider(indent: 0.0),
         ],
         _TdActionSheetList(
           actions: actions,
