@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tdesign_mobile_flutter/tdesign_mobile_flutter.dart';
 
 import '../theme/export.dart';
 import './tab_bar_controller.dart';
