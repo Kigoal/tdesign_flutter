@@ -146,8 +146,7 @@ class _TdCalendarState extends State<TdCalendar> {
     return LayoutBuilder(
       builder: (context, constraints) {
         const count = _kCalendarCrossAxisCount;
-        final itemWidth = (constraints.maxWidth - (count - 1) * spacing) / count;
-
+        final itemWidth = ((constraints.maxWidth - (count - 1) * spacing) / count).floorToDouble();
         final size = Size(itemWidth, itemWidth);
 
         return Column(
