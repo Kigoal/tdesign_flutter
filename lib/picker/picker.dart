@@ -162,7 +162,11 @@ class TdPickerPlugin {
           ],
         );
       },
-    );
+    ).then((_) {
+      if (!completer.isCompleted) {
+        completer.complete();
+      }
+    });
 
     return completer.future;
   }

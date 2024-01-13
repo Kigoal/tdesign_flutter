@@ -21,9 +21,11 @@ class TdFormPicker<T> extends FormField<T> {
   }) : super(
           builder: (field) {
             void handleChanged(T? value) {
-              field.didChange(value);
+              if (value != null) {
+                field.didChange(value);
 
-              onChanged?.call(value);
+                onChanged?.call(value);
+              }
             }
 
             Widget? errorTextWidget;
