@@ -128,7 +128,7 @@ class TdPickerPlugin {
     Widget? title,
     required List<TdPickerItem<T>> options,
   }) {
-    final completer = Completer<T>();
+    final completer = Completer<T?>();
 
     T? value = initialValue;
 
