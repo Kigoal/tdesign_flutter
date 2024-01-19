@@ -153,6 +153,8 @@ class _TdPickerColumnState<T> extends State<TdPickerColumn<T>> {
                 color: theme.textColorPrimary,
                 fontWeight: fontWeight,
               ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               child: child,
             ),
           );
