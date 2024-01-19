@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:tdesign_icons_flutter/tdesign_icons_flutter.dart';
 
@@ -256,7 +259,7 @@ class _TdTextFieldState extends State<TdTextField> {
           counterText: '',
         );
 
-    return TextField(
+    Widget result = TextField(
       onChanged: widget.onChanged,
       controller: _effectiveController,
       focusNode: _effectiveFocusNode,
@@ -275,5 +278,21 @@ class _TdTextFieldState extends State<TdTextField> {
       maxLines: widget.maxLines,
       readOnly: widget.readOnly,
     );
+
+    // 在Android设备上因为密码输入框默认会弹出安全键盘会导致焦点丢失
+    if (Platform.isAndroid) {
+      result = Listener(
+        onPointerDown: (event) {
+          if (_effectiveFocusNode.canRequestFocus) {
+            Timer(const Duration(milliseconds: 150), () {
+              _effectiveFocusNode.requestFocus();
+            });
+          }
+        },
+        child: result,
+      );
+    }
+
+    return result;
   }
 }
