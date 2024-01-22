@@ -149,7 +149,7 @@ class TdPickerPlugin {
               onCancel: () {
                 TdPopupPlugin.pop();
 
-                completer.complete();
+                completer.complete(null);
               },
             ),
             TdPicker<T>(
