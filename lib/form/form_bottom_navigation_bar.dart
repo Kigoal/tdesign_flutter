@@ -83,7 +83,7 @@ class TdFormBottomNavigationBar extends StatelessWidget {
         TdButton.primary(
           onPressed: onSubmit,
           child: submit,
-        )
+        ),
       ],
     );
   }
