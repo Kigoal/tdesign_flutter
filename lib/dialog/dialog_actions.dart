@@ -76,9 +76,8 @@ class TdDialogActions extends StatelessWidget {
   Widget _buildButton(BuildContext context, TdDialogActionButton item) {
     return TdButton(
       onPressed: () {
-        item.onPressed?.call();
-
         TdDialogNotification(item: item).dispatch(context);
+        item.onPressed?.call();
       },
       type: switch (item.role) {
         TdDialogActionRole.none => TdButtonType.light,
