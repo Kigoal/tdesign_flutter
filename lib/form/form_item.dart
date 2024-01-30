@@ -218,7 +218,10 @@ class _TdFormItemVerticalStyle extends StatelessWidget {
       children: [
         if (label != null)
           Padding(
-            padding: EdgeInsets.only(top: theme.spacer1),
+            padding: EdgeInsets.only(
+              top: theme.spacer1,
+              bottom: theme.spacer / 2,
+            ),
             child: label!,
           ),
         Column(

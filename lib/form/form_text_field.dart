@@ -73,6 +73,8 @@ class TdFormTextField extends FormField<String> {
     int? maxLength,
     int minLines = kTdTextFieldMultipleMinLine,
     int maxLines = kTdTextFieldMultipleMaxLine,
+    TextInputType keyboardType = TextInputType.multiline,
+    TextInputAction textInputAction = TextInputAction.newline,
     EdgeInsets? contentPadding,
     Widget? label,
     double? labelWidth,
@@ -99,10 +101,12 @@ class TdFormTextField extends FormField<String> {
               onChanged: handleChanged,
               controller: state._effectiveController,
               hintText: hintText,
-              contentPadding: contentPadding,
+              contentPadding: contentPadding ?? EdgeInsets.zero,
               maxLength: maxLength,
               minLines: minLines,
               maxLines: maxLines,
+              keyboardType: keyboardType,
+              textInputAction: textInputAction,
             );
 
             return TdFormItem(
