@@ -26,3 +26,4 @@ export './tag/export.dart';
 export './focus/export.dart';
 export './address/export.dart';
 export './calendar/export.dart';
+export './checkbox/export.dart';
